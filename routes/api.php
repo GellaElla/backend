@@ -5,7 +5,8 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\SeniorCitizenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\PensionReleaseController;
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -15,3 +16,12 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+Route::post('/forgot-password', [PasswordResetController::class, 'sendLink'])
+    ->middleware('throttle:5,1');
+
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])
+    ->middleware('throttle:5,1');
+
+    Route::get('/pension-releases', [PensionReleaseController::class, 'index']);
+Route::post('/pension-releases', [PensionReleaseController::class, 'store']);

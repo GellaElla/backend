@@ -23,6 +23,16 @@ class SeniorCitizenController extends Controller
         'gender' => 'required|string',
         'purok' => 'required|string',
         'contact' => 'nullable|string',
+
+        'blood_type' => 'nullable|string',
+        'condition' => 'nullable|string',
+        'maintenance' => 'nullable|string',
+        'last_checkup' => 'nullable|date',
+
+        'civil_status' => 'nullable|string',
+        'emergency_contact' => 'nullable|string',
+        'relationship' => 'nullable|string',
+        'osca_id' => 'nullable|in:Active,Inactive',
     ]);
 
     $nextNumber = (SeniorCitizen::max('id') ?? 0) + 1;
@@ -31,9 +41,7 @@ class SeniorCitizenController extends Controller
         'SC-' . now()->year . '-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
     $validated['status'] = 'Active';
-    $validated['condition'] = 'None noted';
-    $validated['maintenance'] = 'None';
-    $validated['osca_id'] = 'Active';
+    $validated['osca_id'] = $validated['osca_id'] ?? 'Active';
 
     $seniorCitizen = SeniorCitizen::create($validated);
 
@@ -55,13 +63,13 @@ class SeniorCitizenController extends Controller
             'gender' => 'sometimes|string',
             'purok' => 'sometimes|string',
             'contact' => 'nullable|string',
-
-            'status' => 'nullable|string',
+            
+'status' => 'sometimes|required|in:Active,Needs follow-up,Needs attention,Archived,Inactive,Deceased',
 
             'blood_type' => 'nullable|string',
             'condition' => 'nullable|string',
             'maintenance' => 'nullable|string',
-            'last_checkup' => 'nullable|date',
+          
 
             'civil_status' => 'nullable|string',
             'emergency_contact' => 'nullable|string',
