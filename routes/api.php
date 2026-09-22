@@ -9,12 +9,17 @@ use App\Http\Controllers\PensionReleaseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MedicalRequestController;
+use App\Http\Controllers\BurialRequestController;
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('senior-citizens', SeniorCitizenController::class);
     Route::apiResource('announcements', AnnouncementController::class);
     Route::apiResource('applications', ApplicationController::class);
-
+    Route::apiResource('medical-requests', MedicalRequestController::class);
+    Route::apiResource('burial-requests', BurialRequestController::class);
+    
     // User Management
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users', [UserController::class, 'store']);
